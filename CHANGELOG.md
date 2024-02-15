@@ -2,4 +2,5 @@
 
 ### Feat
 
-- **ol**: Added OracleLinux version9 ci(cz): Added commitizen workflow
+- **ol**: Added OracleLinux version9 
+- **ci**: Added commitizen workflow

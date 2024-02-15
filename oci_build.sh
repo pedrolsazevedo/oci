@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Function to display help information
 display_help() {
   echo "Usage: ./build_images.sh [all | alpine | suse | ubi | ubuntu | node]"
   echo ""

@@ -15,6 +15,20 @@ All images will be built with curl wget vim bind-tools/dnsutils.
 
 The images will be built with the tag local/IMAGE_NAME and local/IMAGE_NAME:latest
 
+**Images size**:
+```
+docker images --format "table \t{{.Repository}}\t{{.Size}}\t{{.Tag}}"
+```
+```
+REPOSITORY          SIZE      TAG
+local/oraclelinux   306MB     latest
+local/node          182MB     latest
+local/suse          265MB     latest
+local/alpine        48.3MB    latest
+local/ubuntu        198MB     latest
+```
+
+
 ## Build Script
 **`oci_build.sh`**
 Basic script to build single or all images.
