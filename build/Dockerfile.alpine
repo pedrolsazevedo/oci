@@ -1,0 +1,8 @@
+FROM alpine:latest
+
+RUN apk update && \
+    apk upgrade && \
+    apk add curl wget vim bind-tools && \
+    rm -rf /var/cache/apk/*
+
+ENTRYPOINT ["/bin/sh"]

@@ -1,0 +1,10 @@
+FROM registry.opensuse.org/opensuse/leap-dnf:latest
+
+RUN dnf update -y && \
+    dnf upgrade -y && \
+    dnf clean all
+
+RUN dnf install curl wget vim bind-utils -y && \
+    dnf clean all
+
+ENTRYPOINT [ "/bin/bash" ]

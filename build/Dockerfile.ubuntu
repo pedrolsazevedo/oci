@@ -1,0 +1,16 @@
+FROM ubuntu:latest
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y curl wget vim dnsutils && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["/bin/bash"]
+
+# COPY update.sh /usr/local/bin/
+
+# RUN chmod +x /usr/local/bin/update.sh
+
+# CMD ["/usr/local/bin/update.sh"]
