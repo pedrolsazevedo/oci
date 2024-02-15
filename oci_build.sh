@@ -13,6 +13,7 @@ display_help() {
   echo "  ubi      Build Red Hat Universal Base Image (UBI) image"
   echo "  ubuntu   Build Ubuntu Linux image"
   echo "  node     Build Node.js image"
+  echo "  ol       Build Oracle Linux image"
   echo ""
   echo "Examples:"
   echo "  ./build_images.sh all"
@@ -39,6 +40,7 @@ if [ "$1" == "all" ]; then
   build_image "ubi" "build/Dockerfile.ubi"
   build_image "ubuntu" "build/Dockerfile.ubuntu"
   build_image "node" "build/Dockerfile.node"
+  build_image "oraclelinux" "build/Dockerfile.oraclelinux"
 else
   case $1 in
   "alpine")
@@ -55,6 +57,9 @@ else
     ;;
   "node")
     build_image "node" "build/Dockerfile.node"
+    ;;
+  "ol")
+    build_image "oraclelinux" "build/Dockerfile.oraclelinux"
     ;;
   *)
     echo "Invalid argument: $1"

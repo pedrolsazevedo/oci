@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi9/ubi:latest
+# FROM container-registry.oracle.com/os/oraclelinux:9
+FROM oraclelinux:9
 
 RUN dnf update -y && \
     dnf upgrade -y && \
@@ -7,4 +8,4 @@ RUN dnf update -y && \
 RUN dnf install curl wget vim bind-utils -y && \
     dnf clean all
 
-ENTRYPOINT  ["/bin/bash"]
+ENTRYPOINT [ "/bin/bash" ]
