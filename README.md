@@ -23,9 +23,10 @@ docker images --format "table \t{{.Repository}}\t{{.Size}}\t{{.Tag}}"
 REPOSITORY          SIZE      TAG
 local/oraclelinux   306MB     latest
 local/node          182MB     latest
+local/ubuntu        198MB     latest
+local/ubi           293MB     latest
 local/suse          265MB     latest
 local/alpine        48.3MB    latest
-local/ubuntu        198MB     latest
 ```
 
 
