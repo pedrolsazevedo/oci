@@ -8,18 +8,20 @@ RUN apt-get update && \
     vim \
     wget \
     unzip \
-    gpg
+    gpg \
+    dnsutils \
+    whois
 
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-# Install brew
+# Install brew and tools.
 RUN /bin/bash -c "NONINTERACTIVE=1 $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 RUN (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> ~/.bashrc
 RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 RUN apt-get install build-essential -y
-RUN brew install gcc helm kubectl k9s mise
+RUN brew install gcc helm kubectl k9s mise kubelogin
 
 # Configure MISE
 RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
