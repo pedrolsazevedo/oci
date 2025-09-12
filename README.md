@@ -16,10 +16,10 @@ All images include: `curl`, `git`, `vim`, `wget`, `unzip`, `openssl`, DNS tools,
 |-------|------|------------|------|
 | **Alpine** | `alpine:latest` | `psazevedo/alpine` | ~180MB |
 | **Ubuntu** | `ubuntu:24.04` | `psazevedo/ubuntu` | ~350MB |
-| **UBI** | `ubi9/ubi:latest` | `psazevedo/ubi` | ~400MB |
-| **SUSE** | `opensuse/leap:latest` | `psazevedo/suse` | ~380MB |
+| **UBI** | `redhat/ubi9:latest` | `psazevedo/ubi` | ~400MB |
+| **SUSE** | `opensuse/tumbleweed:latest` | `psazevedo/suse` | ~380MB |
 | **Node** | `node:alpine` | `psazevedo/node` | ~280MB |
-| **Oracle Linux** | `oraclelinux:9` | `psazevedo/oraclelinux` | ~420MB |
+| **Oracle Linux** | `oraclelinux:10` | `psazevedo/oraclelinux` | ~420MB |
 
 ## Quick Start
 
