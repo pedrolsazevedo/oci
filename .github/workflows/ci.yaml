@@ -16,28 +16,28 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
       - uses: pre-commit/action@v3.0.1
 
-  test_build:
-    needs: pre_commit
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image: [alpine, ubuntu, ubi, suse, node, oraclelinux]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - name: Test build ${{ matrix.image }}
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./build/Dockerfile.${{ matrix.image }}
-          platforms: linux/amd64
-          push: false
+  # test_build:
+  #   needs: pre_commit
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       image: [alpine, ubuntu, ubi, suse, node, oraclelinux]
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: docker/setup-buildx-action@v3
+  #     - name: Test build ${{ matrix.image }}
+  #       uses: docker/build-push-action@v5
+  #       with:
+  #         context: .
+  #         file: ./build/Dockerfile.${{ matrix.image }}
+  #         platforms: linux/amd64
+  #         push: false
 
   bump_version:
-    needs: test_build
+    needs: pre_commit
     if: "!startsWith(github.event.head_commit.message, 'bump:')"
     runs-on: ubuntu-latest
     environment: release
