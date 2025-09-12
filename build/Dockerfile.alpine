@@ -1,8 +1,26 @@
 FROM alpine:latest
 
-RUN apk update && \
-    apk upgrade && \
-    apk add curl wget vim bind-tools && \
-    rm -rf /var/cache/apk/*
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    curl \
+    git \
+    vim \
+    wget \
+    unzip \
+    gnupg \
+    bind-tools \
+    whois \
+    openssl \
+    bash \
+    build-base
 
-ENTRYPOINT ["/bin/sh"]
+RUN /bin/bash -c "NONINTERACTIVE=1 $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
+RUN (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> ~/.bashrc
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+RUN brew install gcc helm kubectl k9s mise kubelogin
+
+RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+RUN mise use -g -y terraform@latest terragrunt@latest
+
+CMD [ "bash" ]

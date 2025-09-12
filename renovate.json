@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "docker": {
+    "enabled": true
+  },
+  "dockerfile": {
+    "enabled": true
+  },
+  "github-actions": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchDatasources": ["github-actions"],
+      "automerge": true,
+      "automergeType": "pr"
+    }
+  ]
+}

@@ -1,6 +1,0 @@
-alias alpsh='docker run -it --rm local/alpine'
-alias ubash='docker run -it --rm local/ubuntu'
-alias rhbash='docker run -it --rm local/ubi'
-alias susebash='docker run -it --rm local/suse'
-alias node='docker run -it --rm -v $(pwd):/app local/node'
-alias olbash='docker run -it --rm local/oraclelinux'
