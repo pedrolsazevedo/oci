@@ -20,7 +20,7 @@ show_help() {
 build_image() {
     local image=$1
     echo "Building $image image"
-    docker build -t local/$image:latest -f build/Dockerfile.$image .
+    docker build -t local/"$image":latest -f build/Dockerfile."$image" .
 }
 
 case $1 in
@@ -32,7 +32,7 @@ case $1 in
                 done
                 ;;
             alpine|ubuntu|ubi|suse|node|oraclelinux)
-                build_image $2
+                build_image "$2"
                 ;;
             *)
                 echo "Error: Unknown distro '$2'"
@@ -51,7 +51,7 @@ case $1 in
         shift 2
         case $distro in
             alpine|ubuntu|ubi|suse|node|oraclelinux)
-                docker run -it --rm "$@" local/$distro
+                docker run -it --rm "$@" local/"$distro"
                 ;;
             *)
                 echo "Error: Unknown distro '$distro'"
