@@ -1,4 +1,4 @@
-FROM opensuse/leap:latest
+FROM opensuse/tumbleweed:latest
 
 RUN zypper refresh && zypper update -y && \
     zypper install -y \
