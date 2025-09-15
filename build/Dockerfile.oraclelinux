@@ -11,23 +11,21 @@ RUN dnf update -y && \
     bind-utils \
     whois \
     openssl \
-    gcc \
-    gcc-c++ \
-    make \
-    sudo
+    ca-certificates
 
-RUN useradd -m -s /bin/bash linuxbrew && echo 'linuxbrew ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER linuxbrew
-WORKDIR /home/linuxbrew
+# Install kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-RUN /bin/bash -c "NONINTERACTIVE=1 $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
-RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-RUN /home/linuxbrew/.linuxbrew/bin/brew install helm kubectl k9s mise kubelogin
+# Install helm
+RUN curl https://get.helm.sh/helm-v3.13.3-linux-$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz | tar -xz && \
+    mv linux-*/helm /usr/local/bin/
 
-RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
-RUN /home/linuxbrew/.linuxbrew/bin/mise use -g -y terraform@latest terragrunt@latest
+# Install mise
+RUN curl https://mise.run | sh && \
+    echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
 
-USER root
+# Install terraform and terragrunt via mise
+RUN ~/.local/bin/mise use -g terraform@latest terragrunt@latest
 
 CMD [ "bash" ]

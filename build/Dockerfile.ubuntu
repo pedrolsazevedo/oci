@@ -13,20 +13,24 @@ RUN apt-get update && \
     whois \
     openssl \
     build-essential \
-    sudo
+    ca-certificates
 
-RUN useradd -m -s /bin/bash linuxbrew && echo 'linuxbrew ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER linuxbrew
-WORKDIR /home/linuxbrew
+# Install kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-RUN /bin/bash -c "NONINTERACTIVE=1 $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
-RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-RUN /home/linuxbrew/.linuxbrew/bin/brew install helm kubectl k9s mise kubelogin
+# Install helm
+RUN apt-get install -y apt-transport-https && \
+    curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null && \
+    echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main" | tee /etc/apt/sources.list.d/helm-stable-debian.list && \
+    apt-get update && \
+    apt-get install -y helm
 
-RUN echo 'eval "$(mise activate bash)"' >> ~/.bashrc
-RUN /home/linuxbrew/.linuxbrew/bin/mise use -g -y terraform@latest terragrunt@latest
+# Install mise
+RUN curl https://mise.run | sh && \
+    echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
 
-USER root
+# Install terraform and terragrunt via mise
+RUN ~/.local/bin/mise use -g terraform@latest terragrunt@latest
 
 CMD [ "bash" ]
