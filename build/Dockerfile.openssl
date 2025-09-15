@@ -1,0 +1,17 @@
+FROM alpine:latest
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    curl \
+    git \
+    vim \
+    wget \
+    unzip \
+    gnupg \
+    bind-tools \
+    whois \
+    openssl \
+    bash \
+    build-base
+
+CMD [ "bash" ]
